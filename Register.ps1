@@ -11,7 +11,7 @@ if (!(Test-Path $path))
     $path = "C:\Users\$pcUser\Desktop\Scripts"
     New-Item -Name Logins -ItemType Directory -Path $path
     $path = "C:\Users\$pcUser\Desktop\Scripts\Logins"
-    New-Item -Name Logins.dat -ItemType File -Path $path -Value "---Logins---`r`n`r`n"
+    New-Item -Name Logins.dat -ItemType File -Path $path -Value "---Logins---`r`n`r`n" 
 }
 
 
@@ -23,7 +23,7 @@ sl $path.replace("\Logins.dat", "")
 #on teste si le nom d'utilisateur n'est pas déjà enregistré.
 $log_Content = get-content Logins.dat
 
-while ((research($user) -ne $False) -and ($user -ne "-1"))
+while (research($user) -and ($user -ne "-1"))
 {
     $user = Read-Host "Oups ! Ce nom est déjà utilisé !`nVeuillez réessayer "
 }
@@ -37,22 +37,13 @@ if ($user -eq "-1")
 else
 {
     #si le nom d'utilisateur n'est pas pris, on demande d'entrer un mot de passe et de le confirmer.
-    [string]$password = Read-Host "Veuillez entrer un mot de passe "
-    [string]$confirm = Read-Host "Confirmez le mot de passe "
+    $pwd = Password
     
-    #tant que la confirmation ne correspondra pas au mot de passe saisi,
-    #on demande de re-saisir le mot de passe et de le confirmer
-    while ($confirm -ne $password)
-    {
-        $password = Read-Host "Vous avez mal confirmé votre mot de passe, veuillez le re-saisir "
-        $confirm = Read-Host "Confirmez le mot de passe "
-    }
-
     #enfin on écrit les données dans le fichier Logins
     #et on informe l'utilisateur qu'il a bien été enregistré.
-    Add-content Logins.dat $user
-    Add-content Logins.dat $password
-    Add-Content Logins.dat ""
+    Add-content Logins.dat $user 
+    Add-content Logins.dat $pwd 
+    Add-Content Logins.dat "" 
     
     echo "Vous avez bien été enregistré(e) !"
 }
