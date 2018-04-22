@@ -1,19 +1,8 @@
 #On introduit les fonctions du script Functions.ps1
 . ".\Functions.ps1"
 
-#on construit le chemin du fichier où l'on stockera les informations.
-[string]$pcUser = [Environment]::UserName
-[string]$path = "C:\Users\$pcUser\Desktop\Scripts\Logins\Logins.dat"
-
-#si le fichier n'existe pas, on crée ce fichier.
-if ( ! (Test-Path $path)) 
-{
-    $path = "C:\Users\$pcUser\Desktop\Scripts"
-    New-Item -Name Logins -ItemType Directory -Path $path
-    $path = "C:\Users\$pcUser\Desktop\Scripts\Logins"
-    New-Item -Name Logins.dat -ItemType File -Path $path -Value "---Logins---`r`n`r`n"
-}
- 
+#on appelle la fonction d'initialisation
+Initialisation
 
 #on définit le chemin du fichier Logs et on stocke son contenu dan $ log_Content.
 $log_Content = get-content $path

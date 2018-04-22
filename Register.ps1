@@ -1,19 +1,14 @@
 #On introduit les fonctions du script Functions.ps1
 . ".\Functions.ps1"
 
+#on appelle la fonction d'initialisation
+Initialisation
+
 #on construit le chemin du fichier où l'on stockera les informations.
 [string]$pcUser = [Environment]::UserName
 [string]$path = "C:\Users\$pcUser\Desktop\Scripts\Logins\Logins.dat"
 
-#si le fichier n'existe pas, on crée ce fichier.
-if (!(Test-Path $path)) 
-{
-    $path = "C:\Users\$pcUser\Desktop\Scripts"
-    New-Item -Name Logins -ItemType Directory -Path $path
-    $path = "C:\Users\$pcUser\Desktop\Scripts\Logins"
-    New-Item -Name Logins.dat -ItemType File -Path $path -Value "---Logins---`r`n`r`n"
-}
-
+FileExistence($path)
 
 #on demande à l'utilisateur de saisir son nom d'utilisateur.
 [string]$user = Read-Host "Quel est votre nom d'utilisateur ? (entrez -1 pour quitter) "
@@ -36,17 +31,8 @@ if ($user -eq "-1")
     
 else
 {
-    #si le nom d'utilisateur n'est pas pris, on demande d'entrer un mot de passe et de le confirmer.
-    [string]$password = Read-Host "Veuillez entrer un mot de passe "
-    [string]$confirm = Read-Host "Confirmez le mot de passe "
-    
-    #tant que la confirmation ne correspondra pas au mot de passe saisi,
-    #on demande de re-saisir le mot de passe et de le confirmer
-    while ($confirm -ne $password)
-    {
-        $password = Read-Host "Vous avez mal confirmé votre mot de passe, veuillez le re-saisir "
-        $confirm = Read-Host "Confirmez le mot de passe "
-    }
+    #saisie du mot de passe
+    $pwd = PwdEntry
 
     #enfin on écrit les données dans le fichier Logins
     #et on informe l'utilisateur qu'il a bien été enregistré.
