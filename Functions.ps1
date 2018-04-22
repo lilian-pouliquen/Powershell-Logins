@@ -61,7 +61,7 @@ function PwdEntry
     return $confirm
 }
 
-function clearlogs
+function clearlogs($path)
 {
     ### Efface le contenu du fichier Logs. ###
 

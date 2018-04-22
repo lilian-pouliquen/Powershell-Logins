@@ -32,7 +32,7 @@ if ($user -eq "-1")
 else
 {
     #saisie du mot de passe
-    $pwd = PwdEntry
+    $password = PwdEntry
 
     #enfin on écrit les données dans le fichier Logins
     #et on informe l'utilisateur qu'il a bien été enregistré.
