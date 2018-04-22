@@ -18,7 +18,7 @@
     }
 }
 
-function clearlogs
+function clearlogs($path)
 {
     ### Efface le contenu du fichier Logs. ###
 
@@ -30,17 +30,22 @@ function Password
 {
     ### Crypte le mot de passe passé en paramètre ###
     
-    [string]$password = Read-Host "Veuillez entrer un mot de passe " -assecurestring
-    [string]$confirm = Read-Host "Confirmez le mot de passe " -assecurestring
+    [string]$password = Read-Host "Veuillez entrer un mot de passe " -assecurestring 
+    [string]$confirm = Read-Host "Confirmez le mot de passe " -assecurestring 
     
     #tant que la confirmation ne correspondra pas au mot de passe saisi,
     #on demande de re-saisir le mot de passe et de le confirmer
     while ($confirm -ne $password)
     {
-        $password = Read-Host "Vous avez mal confirmé votre mot de passe, veuillez le re-saisir "
-        $confirm = Read-Host "Confirmez le mot de passe " -assecurestring
+        $password = Read-Host "Vous avez mal confirmé votre mot de passe, veuillez le re-saisir " -assecurestring
+        $confirm = Read-Host "Confirmez le mot de passe " -assecurestring 
     }    
     
-    $pwdcrypt = convertfrom-securestring $confirm -asplaintext
-    return $pwdcrypt
+    #$pwdcrypt = convertfrom-securestring $confirm
+    return ConversionPwd($confirm)
+}
+
+function ConversionPwd($pwd)
+{
+     return ConvertTo-SecureString $pwd -AsPlainText -Force | convertfrom-securestring
 }
