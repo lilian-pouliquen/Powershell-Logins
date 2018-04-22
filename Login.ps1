@@ -4,7 +4,6 @@
 #on construit le chemin du fichier où l'on stockera les informations.
 [string]$pcUser = [Environment]::UserName
 [string]$path = "C:\Users\$pcUser\Desktop\Scripts\Logins\Logins.dat"
-$key = ConversionPwd("-1")
 
 #si le fichier n'existe pas, on crée ce fichier.
 if ( ! (Test-Path $path)) 
@@ -29,15 +28,14 @@ if ($res -ne $False)
     $pwd = $log_Content[$res+1]
 
     #si oui, on demande le mot de passe et on vérifie s'il correspond.
-    $password = Read-Host "Entrez votre mot de passe (entrez -1 pour sortir)" -assecurestring
-    while (($password -ne $pwd) -and ($password -ne $key))
+    $password = Read-Host "Entrez votre mot de passe (entrez -1 pour sortir)"
+    while (($password -ne $pwd) -and ($password -ne "-1"))
     {
-        $password = Read-Host "Oups ! Ce n'est pas le bon mot de passe !`nVeuillez réessayer " -assecurestring
-        $password = ConversionPwd($password)
+        $password = Read-Host "Oups ! Ce n'est pas le bon mot de passe !`nVeuillez réessayer "
     }
             
     #clef d'echappement, qui fait sortir du programme.
-    if ($password -eq $key)
+    if ($password -eq "-1")
     {
         echo "Revenez vite ! ^.^"
     }
